@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AI Healthcare Companion Robot
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =================================================
+         3D SIMULATION
+         ================================================= -->
+
+    <div id="simulation">
+
+        <!-- =============================================
+             TOP LEFT PROJECT INFORMATION
+             ============================================= -->
+
+        <div id="status">
+
+            <div class="project-title">
+
+                <div class="title-icon">
+                    ✚
+                </div>
+
+                <div>
+
+                    <h1>
+                        AI Healthcare
+                        <br>
+                        Companion Robot
+                    </h1>
+
+                    <p>
+                        Autonomous Patient Monitoring
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Robot status -->
+
+            <div class="status-card">
+
+                <div>
+
+                    <span>
+                        Robot Status
+                    </span>
+
+                    <small>
+                        AI CARE SYSTEM
+                    </small>
+
+                </div>
+
+                <strong
+                    id="robotStatus"
+                    class="status-standby"
+                >
+                    STANDBY
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             3D SCENE
+             ============================================= -->
+
+        <div id="scene"></div>
+
+
+        <!-- =============================================
+             PATIENT MONITORING PANEL
+             ============================================= -->
+
+        <div id="controls">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>
+                        Patient Monitoring
+                    </h2>
+
+                    <p>
+                        Real-time physiological assessment
+                    </p>
+
+                </div>
+
+                <div
+                    id="monitorIndicator"
+                    class="monitor-indicator"
+                ></div>
+
+            </div>
+
+
+            <!-- Heart Rate -->
+
+            <div class="sensor-card">
+
+                <div class="sensor-icon heart">
+                    ♥
+                </div>
+
+                <div class="sensor-information">
+
+                    <span>
+                        Heart Rate
+                    </span>
+
+                    <strong id="heartRate">
+                        74 BPM
+                    </strong>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SpO2 -->
+
+            <div class="sensor-card">
+
+                <div class="sensor-icon oxygen">
+                    🫁
+                </div>
+
+                <div class="sensor-information">
+
+                    <span>
+                        SpO₂
+                    </span>
+
+                    <strong id="spo2">
+                        98 %
+                    </strong>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Temperature -->
+
+            <div class="sensor-card">
+
+                <div class="sensor-icon temperature">
+                    °C
+                </div>
+
+                <div class="sensor-information">
+
+                    <span>
+                        Temperature
+                    </span>
+
+                    <strong id="temperature">
+                        36.7 °C
+                    </strong>
+
+                    <div class="sensor-line">
+                        <span></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 SIMULATION CONTROLS
+                 ========================================= -->
+
+            <div class="scenario-title">
+                Simulation Scenarios
+            </div>
+
+            <div class="buttons">
+
+                <button
+                    id="normalBtn"
+                    class="scenario normal"
+                >
+                    <span>●</span>
+                    Normal
+                </button>
+
+
+                <button
+                    id="hrBtn"
+                    class="scenario danger"
+                >
+                    <span>♥</span>
+                    Abnormal HR
+                </button>
+
+
+                <button
+                    id="spo2Btn"
+                    class="scenario oxygen-button"
+                >
+                    <span>🫁</span>
+                    Low SpO₂
+                </button>
+
+
+                <button
+                    id="tempBtn"
+                    class="scenario warning"
+                >
+                    <span>°C</span>
+                    High Temperature
+                </button>
+
+
+                <button
+                    id="distressBtn"
+                    class="scenario distress"
+                >
+                    <span>!</span>
+                    Patient Distress
+                </button>
+
+
+                <button
+                    id="resetBtn"
+                    class="scenario reset"
+                >
+                    <span>↻</span>
+                    Reset
+                </button>
+
+            </div>
+
+
+            <!-- =========================================
+                 SYSTEM INFORMATION
+                 ========================================= -->
+
+            <div class="monitor-footer">
+
+                <div>
+
+                    <span class="footer-dot"></span>
+
+                    Continuous Monitoring
+
+                </div>
+
+                <span>
+                    AI CARE v1.0
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             SYSTEM EVENT LOG
+             ============================================= -->
+
+        <div id="eventLog">
+
+            <div class="event-header">
+
+                <div>
+
+                    <h2>
+                        System Event Log
+                    </h2>
+
+                    <p>
+                        Autonomous system activity
+                    </p>
+
+                </div>
+
+                <div class="live-indicator">
+
+                    <span></span>
+
+                    LIVE
+
+                </div>
+
+            </div>
+
+
+            <div id="log">
+
+                <p class="system-event">
+                    System initialized.
+                </p>
+
+                <p class="system-event">
+                    Continuous patient monitoring active.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             3D CONVERSATION BUBBLES
+             These are positioned by conversation.js
+             ============================================= -->
+
+        <div
+            id="robotSpeech"
+            class="speech-bubble robot-bubble hidden"
+        ></div>
+
+
+        <div
+            id="patientSpeech"
+            class="speech-bubble patient-bubble hidden"
+        ></div>
+
+
+        <!-- =============================================
+             ALERT OVERLAY
+             ============================================= -->
+
+        <div
+            id="alertOverlay"
+            class="alert-overlay hidden"
+        >
+
+            <div class="alert-card">
+
+                <div class="alert-symbol">
+                    !
+                </div>
+
+                <h2>
+                    Patient Alert
+                </h2>
+
+                <p>
+                    A potentially abnormal
+                    patient condition has been detected.
+                </p>
+
+                <div class="alert-recipients">
+
+                    <div>
+                        <span>✓</span>
+                        Doctor notified
+                    </div>
+
+                    <div>
+                        <span>✓</span>
+                        Caretaker notified
+                    </div>
+
+                </div>
+
+                <button
+                    id="closeAlert"
+                    class="close-alert"
+                >
+                    Continue Monitoring
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         THREE.JS IMPORT MAP
+         ================================================= -->
+
+    <script type="importmap">
+
+    {
+        "imports": {
+
+            "three":
+                "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+
+            "three/addons/":
+                "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+
+        }
+    }
+
+    </script>
+
+
+    <!-- =================================================
+         MAIN 3D APPLICATION
+         ================================================= -->
+
+    <script
+        type="module"
+        src="3d/scene.js"
+    ></script>
+
+
+</body>
+
+</html>

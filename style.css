@@ -1,0 +1,1336 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0b1017;
+    color: #e8edf5;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+#simulation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#scene {
+    position: absolute;
+    inset: 0;
+}
+
+canvas {
+    display: block;
+}
+
+
+/* TOP STATUS */
+
+#status {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    z-index: 10;
+
+    background: rgba(15, 22, 32, 0.92);
+
+    border: 1px solid #344154;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    width: 300px;
+
+    backdrop-filter: blur(8px);
+}
+
+#status h1 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+#status p {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.status-card {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 15px;
+
+    padding: 10px;
+
+    background: #182333;
+
+    border-radius: 8px;
+}
+
+.status-card strong {
+    color: #4ade80;
+}
+
+
+/* MONITORING PANEL */
+
+#controls {
+    position: absolute;
+
+    right: 20px;
+    top: 20px;
+
+    z-index: 10;
+
+    width: 290px;
+
+    background: rgba(15, 22, 32, 0.94);
+
+    border: 1px solid #344154;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    backdrop-filter: blur(8px);
+}
+
+#controls h2 {
+    font-size: 16px;
+
+    margin-bottom: 12px;
+}
+
+.sensor {
+    display: flex;
+    justify-content: space-between;
+
+    background: #182333;
+
+    padding: 11px;
+
+    border-radius: 7px;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+}
+
+.sensor strong {
+    color: #ffffff;
+}
+
+
+/* BUTTONS */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 7px;
+
+    margin-top: 14px;
+}
+
+button {
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: #334155;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 11px;
+}
+
+button:hover {
+    background: #475569;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* EVENT LOG */
+
+#eventLog {
+    position: absolute;
+
+    left: 20px;
+    bottom: 20px;
+
+    z-index: 10;
+
+    width: 340px;
+
+    background: rgba(15, 22, 32, 0.94);
+
+    border: 1px solid #344154;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+}
+
+#eventLog h2 {
+    font-size: 14px;
+
+    margin-bottom: 10px;
+}
+
+#log {
+    height: 100px;
+
+    overflow-y: auto;
+}
+
+#log p {
+    font-family: monospace;
+
+    font-size: 10px;
+
+    color: #94a3b8;
+
+    margin-bottom: 6px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    #status {
+        width: 240px;
+    }
+
+    #controls {
+        width: 240px;
+    }
+
+    #eventLog {
+        width: 280px;
+    }
+
+}/* =====================================================
+   GLOBAL
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    background: #07111f;
+    color: #f8fafc;
+}
+
+
+/* =====================================================
+   SIMULATION CONTAINER
+   ===================================================== */
+
+#simulation {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(37, 99, 235, 0.08),
+            transparent 45%
+        ),
+        #07111f;
+}
+
+
+/* =====================================================
+   3D SCENE
+   ===================================================== */
+
+#scene {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+}
+
+#scene canvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =====================================================
+   TOP LEFT STATUS
+   ===================================================== */
+
+#status {
+    position: absolute;
+
+    top: 24px;
+    left: 28px;
+
+    width: 315px;
+
+    z-index: 20;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   PROJECT TITLE
+   ===================================================== */
+
+.project-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 16px;
+}
+
+
+.title-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #0ea5e9
+        );
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 30px
+        rgba(37, 99, 235, 0.35);
+}
+
+
+.project-title h1 {
+    font-size: 20px;
+
+    line-height: 1.15;
+
+    font-weight: 700;
+
+    letter-spacing: -0.3px;
+}
+
+
+.project-title p {
+    margin-top: 5px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    letter-spacing: 0.8px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   ROBOT STATUS CARD
+   ===================================================== */
+
+.status-card {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 14px 16px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.16);
+
+    border-radius: 13px;
+
+    background:
+        rgba(15, 23, 42, 0.82);
+
+    backdrop-filter:
+        blur(16px);
+
+    box-shadow:
+        0 12px 35px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+.status-card span {
+    display: block;
+
+    color: #cbd5e1;
+
+    font-size: 12px;
+}
+
+
+.status-card small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+
+.status-card strong {
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+}
+
+
+.status-standby {
+    color: #4ade80;
+
+    background:
+        rgba(34, 197, 94, 0.1);
+
+    border:
+        1px solid
+        rgba(34, 197, 94, 0.25);
+}
+
+
+/* =====================================================
+   MONITORING PANEL
+   ===================================================== */
+
+#controls {
+    position: absolute;
+
+    top: 24px;
+    right: 28px;
+
+    width: 335px;
+
+    z-index: 20;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.16);
+
+    border-radius: 18px;
+
+    background:
+        rgba(8, 18, 32, 0.88);
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0, 0, 0, 0.35);
+}
+
+
+/* =====================================================
+   PANEL HEADER
+   ===================================================== */
+
+.panel-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 17px;
+}
+
+
+.panel-header h2 {
+    font-size: 16px;
+
+    font-weight: 650;
+}
+
+
+.panel-header p {
+    margin-top: 4px;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    letter-spacing: 0.2px;
+}
+
+
+.monitor-indicator {
+    width: 9px;
+    height: 9px;
+
+    margin-top: 5px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 12px
+        rgba(34, 197, 94, 0.8);
+
+    animation:
+        monitorPulse 2s infinite;
+}
+
+
+@keyframes monitorPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+
+/* =====================================================
+   SENSOR CARDS
+   ===================================================== */
+
+.sensor-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 8px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.09);
+
+    border-radius: 11px;
+
+    background:
+        rgba(15, 23, 42, 0.62);
+}
+
+
+.sensor-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.sensor-icon.heart {
+    color: #fb7185;
+
+    background:
+        rgba(244, 63, 94, 0.12);
+}
+
+
+.sensor-icon.oxygen {
+    color: #38bdf8;
+
+    background:
+        rgba(14, 165, 233, 0.12);
+}
+
+
+.sensor-icon.temperature {
+    color: #fbbf24;
+
+    background:
+        rgba(245, 158, 11, 0.12);
+}
+
+
+.sensor-information {
+    flex: 1;
+}
+
+
+.sensor-information > span {
+    display: block;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    margin-bottom: 3px;
+}
+
+
+.sensor-information strong {
+    display: block;
+
+    color: #f8fafc;
+
+    font-size: 14px;
+
+    font-weight: 650;
+}
+
+
+/* =====================================================
+   SENSOR PROGRESS LINE
+   ===================================================== */
+
+.sensor-line {
+    width: 100%;
+
+    height: 2px;
+
+    margin-top: 6px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(71, 85, 105, 0.35);
+
+    overflow: hidden;
+}
+
+
+.sensor-line span {
+    display: block;
+
+    width: 65%;
+
+    height: 100%;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #38bdf8
+        );
+}
+
+
+/* =====================================================
+   SCENARIO TITLE
+   ===================================================== */
+
+.scenario-title {
+    margin-top: 17px;
+
+    margin-bottom: 9px;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   BUTTON GRID
+   ===================================================== */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 7px;
+}
+
+
+button {
+    font-family:
+        inherit;
+}
+
+
+.scenario {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 34px;
+
+    padding: 8px 6px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.12);
+
+    border-radius: 8px;
+
+    background:
+        rgba(30, 41, 59, 0.75);
+
+    color: #cbd5e1;
+
+    font-size: 9px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+
+.scenario span {
+    font-size: 10px;
+}
+
+
+.scenario:hover {
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(51, 65, 85, 0.95);
+
+    border-color:
+        rgba(148, 163, 184, 0.3);
+
+    color: white;
+}
+
+
+.scenario:active {
+    transform:
+        translateY(0);
+}
+
+
+/* Button types */
+
+.scenario.normal:hover {
+    border-color:
+        rgba(34, 197, 94, 0.5);
+
+    color: #4ade80;
+}
+
+
+.scenario.danger:hover {
+    border-color:
+        rgba(244, 63, 94, 0.5);
+
+    color: #fb7185;
+}
+
+
+.scenario.oxygen-button:hover {
+    border-color:
+        rgba(14, 165, 233, 0.5);
+
+    color: #38bdf8;
+}
+
+
+.scenario.warning:hover {
+    border-color:
+        rgba(245, 158, 11, 0.5);
+
+    color: #fbbf24;
+}
+
+
+.scenario.distress:hover {
+    border-color:
+        rgba(168, 85, 247, 0.5);
+
+    color: #c084fc;
+}
+
+
+.scenario.reset:hover {
+    border-color:
+        rgba(148, 163, 184, 0.5);
+
+    color: white;
+}
+
+
+/* =====================================================
+   MONITOR FOOTER
+   ===================================================== */
+
+.monitor-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 14px;
+
+    padding-top: 11px;
+
+    border-top:
+        1px solid
+        rgba(148, 163, 184, 0.08);
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    letter-spacing: 0.4px;
+}
+
+
+.monitor-footer > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.footer-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 7px
+        rgba(34, 197, 94, 0.8);
+}
+
+
+/* =====================================================
+   EVENT LOG
+   ===================================================== */
+
+#eventLog {
+    position: absolute;
+
+    left: 28px;
+    bottom: 25px;
+
+    width: 330px;
+
+    z-index: 20;
+
+    padding: 15px 17px;
+
+    border:
+        1px solid
+        rgba(148, 163, 184, 0.14);
+
+    border-radius: 14px;
+
+    background:
+        rgba(8, 18, 32, 0.82);
+
+    backdrop-filter:
+        blur(16px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.3);
+}
+
+
+.event-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 10px;
+
+    margin-bottom: 8px;
+
+    border-bottom:
+        1px solid
+        rgba(148, 163, 184, 0.08);
+}
+
+
+.event-header h2 {
+    font-size: 11px;
+
+    font-weight: 650;
+}
+
+
+.event-header p {
+    margin-top: 3px;
+
+    color: #64748b;
+
+    font-size: 8px;
+}
+
+
+.live-indicator {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #4ade80;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.7px;
+}
+
+
+.live-indicator span {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 8px
+        rgba(34, 197, 94, 0.9);
+}
+
+
+#log {
+    max-height: 90px;
+
+    overflow-y: auto;
+}
+
+
+#log::-webkit-scrollbar {
+    width: 3px;
+}
+
+
+#log::-webkit-scrollbar-thumb {
+    background: #334155;
+
+    border-radius: 5px;
+}
+
+
+#log p {
+    margin-bottom: 6px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
+
+    line-height: 1.4;
+}
+
+
+.system-event::before {
+    content: "›";
+
+    margin-right: 6px;
+
+    color: #38bdf8;
+}
+
+
+/* =====================================================
+   SPEECH BUBBLES
+   ===================================================== */
+
+.speech-bubble {
+    position: fixed;
+
+    z-index: 100;
+
+    max-width: 270px;
+
+    padding: 11px 15px;
+
+    border-radius: 13px;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    color: white;
+
+    text-align: center;
+
+    pointer-events: none;
+
+    transform:
+        translate(-50%, -100%);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.35);
+
+    backdrop-filter:
+        blur(12px);
+
+    transition:
+        opacity 0.25s ease;
+}
+
+
+.speech-bubble::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -7px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    border-left:
+        7px solid transparent;
+
+    border-right:
+        7px solid transparent;
+}
+
+
+.robot-bubble {
+    background:
+        rgba(29, 78, 216, 0.94);
+
+    border:
+        1px solid
+        rgba(96, 165, 250, 0.65);
+}
+
+
+.robot-bubble::after {
+    border-top:
+        7px solid
+        rgba(29, 78, 216, 0.94);
+}
+
+
+.patient-bubble {
+    background:
+        rgba(51, 65, 85, 0.96);
+
+    border:
+        1px solid
+        rgba(203, 213, 225, 0.35);
+}
+
+
+.patient-bubble::after {
+    border-top:
+        7px solid
+        rgba(51, 65, 85, 0.96);
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =====================================================
+   ALERT OVERLAY
+   ===================================================== */
+
+.alert-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 500;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(2, 6, 23, 0.58);
+
+    backdrop-filter:
+        blur(5px);
+}
+
+
+.alert-card {
+    width: 350px;
+
+    padding: 28px;
+
+    border:
+        1px solid
+        rgba(248, 113, 113, 0.4);
+
+    border-radius: 20px;
+
+    background:
+        rgba(15, 23, 42, 0.97);
+
+    text-align: center;
+
+    box-shadow:
+        0 30px 100px
+        rgba(0, 0, 0, 0.5);
+}
+
+
+.alert-symbol {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    margin: 0 auto 14px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(239, 68, 68, 0.14);
+
+    border:
+        1px solid
+        rgba(239, 68, 68, 0.4);
+
+    color: #f87171;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+
+.alert-card h2 {
+    color: #f8fafc;
+
+    font-size: 21px;
+
+    margin-bottom: 9px;
+}
+
+
+.alert-card > p {
+    color: #94a3b8;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+.alert-recipients {
+    margin: 18px 0;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(30, 41, 59, 0.65);
+}
+
+
+.alert-recipients div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 5px;
+
+    color: #cbd5e1;
+
+    font-size: 11px;
+}
+
+
+.alert-recipients span {
+    color: #4ade80;
+
+    font-weight: 700;
+}
+
+
+.close-alert {
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #0284c7
+        );
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+
+.close-alert:hover {
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(37, 99, 235, 0.3);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+    #controls {
+        width: 290px;
+        right: 15px;
+    }
+
+    #status {
+        left: 15px;
+        top: 15px;
+    }
+
+    #eventLog {
+        left: 15px;
+        bottom: 15px;
+        width: 290px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    #controls {
+        top: auto;
+        bottom: 15px;
+        right: 15px;
+        width: 270px;
+    }
+
+    #eventLog {
+        display: none;
+    }
+
+    #status {
+        width: 250px;
+    }
+
+    .project-title h1 {
+        font-size: 16px;
+    }
+
+}
